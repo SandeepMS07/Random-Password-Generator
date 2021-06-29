@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Password Generator</title>
+    <title>Random Password Generator with Copy Button</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,9 +12,13 @@
         <h2>Random Password Generator App</h2>
         <input type="text" name="" placeholder="Create Password" id="password"
         readonly="">
+        <img src="copy.png" alt="copy image" class="copy" onclick="copyPassword()">
         <div id="btn" onclick="getPassword()">Generate Password</div>
     </div>
+    <div class="alertBox"></div>
     <script type="text/javascript">
+
+        let alertBox = document.querySelector('.alertBox')
         function getPassword(){
             const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+?><:{}[]";
             let passwordLength = 16;
@@ -25,6 +29,19 @@
                 password += chars.substring(randomNumber, randomNumber+1);
             }
             document.getElementById("password").value = password;
+            alertBox.innerHTML = "New Password Copied: <br>" + password;
+
+        }
+
+        function copyPassword(){
+            let copyPassText = document.getElementById("password");
+            copyPassText.select();
+            copyPassText.setSelectionRange(0,9999);
+            document.execCommand("copy");
+            alertBox.classList.toggle('active');
+            setTimeout(function(){
+                alertBox.classList.toggle('active');
+            },2000)
         }
 
     </script>
